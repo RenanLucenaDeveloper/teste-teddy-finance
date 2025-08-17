@@ -2,8 +2,11 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from 'zustand/middleware'
 import type { loginData } from "../dtos/login-dto";
 
-type AuthState = {
-    user: userState;
+export type AuthState = {
+    user: {
+        name: string;
+        isAuthenticated: boolean;
+    };
     login: (loginData: loginData) => void;
     logout: () => void;
 };

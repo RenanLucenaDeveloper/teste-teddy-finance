@@ -1,5 +1,7 @@
 import { Navigate, Outlet } from "react-router";
-import { useAuthData } from "../store/auth.store";
+import { useAuthData } from "../store/authStore";
+import Header from "mfeHeaderSidebar/Header";
+import Sidebar from "mfeHeaderSidebar/Sidebar";
 
 
 export function ProtectedLayout() {
@@ -10,6 +12,8 @@ export function ProtectedLayout() {
   }
 
   return <>
+    <Header/>
+    <Sidebar/>
     <div className="w-full pt-21">
       <Outlet/>
     </div>

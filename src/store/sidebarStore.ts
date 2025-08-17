@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
-type SidebarState = {
+export type SidebarState = {
     isActive: boolean;
     setActive: (status: boolean) => void;
 };
 
-export const useAuthStore = create<SidebarState>(
+export const useSidebarStore = create<SidebarState>(
     (set) => ({
         isActive: false,
         setActive: (status) => set(({ isActive: status })),

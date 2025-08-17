@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react"
 import type { loginData } from "../dtos/login-dto"
 import Button from "../components/Button"
-import { useLogin } from "../store/auth.store"
+import { useLogin } from "../store/authStore"
 import Input from "../components/Input"
 import { useNavigate } from "react-router"
 
