@@ -19,7 +19,7 @@ export default defineConfig({
         "./sidebarStore": "./src/store/sidebarStore.ts",
         "./authStore": "./src/store/authStore.ts",
       },
-      shared: ["react", "react-dom", "zustand"],
+      shared: ["react", "react-dom", "zustand", "react-router"],
     })
   ],
   resolve: {
