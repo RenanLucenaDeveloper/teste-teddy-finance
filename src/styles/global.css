@@ -1,2 +1,140 @@
 @import "tailwindcss";
 
+
+html, body {
+    overflow-x: hidden;
+    behavior: smooth;
+    scroll-behavior: smooth;
+    font-family: "Inter", sans-serif;
+}
+
+ul, li {
+    list-style: none;
+}
+
+img {
+    display: block;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation-name: fade-in;
+    animation-duration: .4s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+:root {
+    /* Brand */
+    --brand-primary: #ec6724;
+    --brand-primary-hover: #ff5500;
+
+    /* Text */
+    --primary-text: #000000;
+    --oposite-text: #FFFFFF;
+
+    /* Input */
+    --placeholder-text: #AAAAAA;
+    --input-bg: transparent;
+    --input-border: 2px solid #D9D9D9;
+    --input-radius: 4px;
+
+    /* Cases */
+    --success: #2fd381;
+    --danger: #D32F2F;
+
+    /* App BG */
+    --app-bg: #F5F5F5;
+}
+
+body {
+    background-color: var(--app-bg);
+}
+
+* {
+    color: var(--primary-text);
+}
+
+/* ------------------------------------------------------------------------------------ */
+/* Color Classes */
+
+/* Text */
+.primary-text {
+    color: var(--primary-text);
+}
+
+.oposite-text {
+    color: var(--oposite-text);
+}
+
+.brand-text {
+    color: var(--brand-primary) !important;
+}
+
+.success-text {
+    color: var(--success-text);
+}
+
+.danger-text {
+    color: var(--danger-text);
+}
+
+.app-bg {
+    background-color: var(--app-bg);
+}
+
+/* Background colors */
+.brand-bg {
+    background-color: var(--brand-primary);
+}
+
+.success-bg {
+    background-color: var(--success);
+}
+
+.danger-bg {
+    background-color: var(--danger);
+}
+
+.brand-hover:hover {
+    transition: .3s background-color;
+}
+
+.brand-hover:hover {
+    background-color: var(--brand-primary-hover);
+}
+
+/* Other colors */
+.brand-border {
+    border-color: var(--brand-primary);
+}
+
+/* ------------------------------------------------------------------------------------ */
+/* Fonts */
+
+/* Font-weights */
+.fw-400 { font-weight: 400 !important; }
+.fw-500 { font-weight: 500 !important; }
+.fw-600 { font-weight: 600 !important; }
+.fw-700 { font-weight: 700 !important; }
+
+
+/* ------------------------------------------------------------------------------------ */
+/* Input */
+
+input::placeholder {
+    color: var(--placeholder-text);
+}
+
+input {
+    border-color: var(--placeholder-text);
+}

@@ -1,9 +1,13 @@
+import { RouterProvider } from "react-router"
+import { router } from "./routes/router"
 
 
 function App() {
   
 
-  return <p>App is running</p>
+  return (
+    <RouterProvider router={router}/>
+  )
 }
 
 export default App
