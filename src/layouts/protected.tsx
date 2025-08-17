@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router";
-import { useAuthData } from "../store/auth";
+import { useAuthData } from "../store/auth.store";
 
 
 export function ProtectedLayout() {
