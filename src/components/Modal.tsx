@@ -26,7 +26,7 @@ export default function Modal({ isOpen, title, children, onClose }: ModalProps) 
 
 					<button 
 					  title="Fechar modal" 
-						className="bg-transparent border-0 shadow-none cursor-pointer"
+						className="transparent-btn"
 						onClick={() => onClose()}>
 						<img src={ closeSVG } alt="Fechar"/>
 					</button>
