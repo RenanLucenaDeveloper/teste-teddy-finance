@@ -12,10 +12,12 @@ export function ProtectedLayout() {
   }
 
   return <>
-    <Header/>
-    <Sidebar/>
-    <div className="w-full pt-21">
-      <Outlet/>
+    <div className="relative">
+      <Header/>
+      <Sidebar/>
+      <div className="w-full pt-21">
+        <Outlet/>
+      </div>
     </div>
   </>;
 }

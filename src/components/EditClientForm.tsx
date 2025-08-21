@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "./Input";
 import Button from "./Button";
-import type { CreateClientProps } from "../types/create-client-props";
+import type { EditClientProps } from "../types/edit-client-props";
 import { useState } from "react";
 import { authorizedHeader } from "../utils/authorized-header";
 
@@ -25,19 +25,24 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 
-const CreateClientForm = ({ handleCloseModal }: CreateClientProps) => {
+const EditClientForm = ({ handleCloseModal, user }: EditClientProps) => {
   const [isSubmitting, setSubmitting] = useState(false)
 
 	const { register, handleSubmit, formState: { errors, isValid } } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: { 
+      name: user.name, 
+      salary: user.salary, 
+      companyValuation: user.companyValuation
+    },
     mode: "onChange"
   });
 
-	async function createUser(data: FormData) {
+	async function editUser(data: FormData) {
     try {
       setSubmitting(true)
-      fetch( `${API_URL}/users`, { 
-        method: 'POST',
+      fetch( `${API_URL}/users/${user.id}`, { 
+        method: 'PATCH',
         headers: authorizedHeader(),
         body: JSON.stringify(data)
       })
@@ -52,7 +57,7 @@ const CreateClientForm = ({ handleCloseModal }: CreateClientProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(createUser)} className="fade-in flex flex-col gap-1">
+    <form onSubmit={handleSubmit(editUser)} className="fade-in flex flex-col gap-1">
       {/* Name */}
       <Input 
         id="name" 
@@ -105,4 +110,4 @@ const CreateClientForm = ({ handleCloseModal }: CreateClientProps) => {
   );
 }
 
-export default CreateClientForm
+export default EditClientForm

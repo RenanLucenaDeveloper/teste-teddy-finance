@@ -5,7 +5,7 @@ import paginatorButtonClasses from "../utils/paginator-button-classes.util"
 
 const Paginator = ({ totalPages, actualPage, setActualPage } : PaginatorProps) => {
   const buttonsArray = generateArrayFromNumber(totalPages)
-  
+  if(actualPage > totalPages) setActualPage(totalPages)
 
   if(totalPages > 1) return (
     <div className="flex items-center justify-center gap-2">

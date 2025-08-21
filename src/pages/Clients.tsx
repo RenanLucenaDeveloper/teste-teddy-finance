@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Modal from "../components/Modal";
 import { itemsPerPageOptions } from "../utils/items-per-page-options.util";
 import type { User } from "../types/user-type";
@@ -15,13 +15,17 @@ import { authorizedHeader } from "../utils/authorized-header";
 import { queryParams } from "../utils/query-params.util";
 import ErrorPage from "./ErrorFallback";
 import CreateClientForm from "../components/CreateClientForm";
+import DeleteClient from "../components/DeleteClient";
+import EditClientForm from "../components/EditClientForm";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Clients = () => {
   const [page, setPage] = useState(1);
   const [itemsPerPage, setitemsPerPage] = useState('16');
-  const [ModalOpen, setModalOpen] = useState(false);
+
+  const [ModalOpen, setModalOpen] = useState<boolean | string>(false);
+  const clickedUser = useRef<User | undefined>(undefined);
 
   const { data, loading, error, refetch } = useFetch<getUsersDto>(
     `${ API_URL }/users${ queryParams({ page, limit: +itemsPerPage }) }`,
@@ -40,12 +44,18 @@ const Clients = () => {
   function handleCloseModal(changed?: boolean) {
     setModalOpen(false);
     if (changed) {
-      
+      setPage(1)
     }
   };
 
-  function selectClient(client: User) {
-    console.log(client)
+  function openEditClientModal(client: User) {
+    clickedUser.current = client
+    setModalOpen('edit-client')
+  }
+
+  function openDeleteClientModal(client: User) {
+    clickedUser.current = client
+    setModalOpen('delete-client')
   }
 
   return (
@@ -55,25 +65,32 @@ const Clients = () => {
         md:flex-row md:align-center md:justify-between
         w-full gap-2 mb-5
       ">
+        {data && (
           <p className="text-lg">
-            <span className="fw-700">16</span> clientes encontrados:
+            <span className="fw-700">{ data.totalPages * (+itemsPerPage) }</span> clientes encontrados:
           </p>
-          
-          <div className="flex align-center gap-2">
-            <p className="text-lg">Clientes por página: </p>
+        )}
+        {!data && (
+          <p className="text-lg">
+            encontrando clientes...
+          </p>
+        )}
+        
+        <div className="flex align-center gap-2">
+          <p className="text-lg">Clientes por página: </p>
 
-            <select 
-              onChange={(e) => setitemsPerPage(e.target.value)}
-              value={ itemsPerPage } 
-              name="itemsPerPage" id="itemsPerPage" className="rounded-sm px-3"
-            >
-              { itemsPerPageOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.value}
-                </option>
-              ))}
-            </select>
-          </div>
+          <select 
+            onChange={(e) => setitemsPerPage(e.target.value)}
+            value={ itemsPerPage } 
+            name="itemsPerPage" id="itemsPerPage" className="rounded-sm px-3"
+          >
+            { itemsPerPageOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.value}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="mt-2">
@@ -101,21 +118,21 @@ const Clients = () => {
 
                 <div className="flex justify-between align-center w-full mt-4">
                   <button className="transparent-btn"
-                    onClick={() => selectClient(client)}
+                    onClick={() => openEditClientModal(client)}
                     title="Selecionar cliente"
                   >
                     <img src={ plusSVG } alt="Selecionar"/>
                   </button>
 
                   <button className="transparent-btn"
-                    onClick={() => selectClient(client)}
+                    onClick={() => openEditClientModal(client)}
                     title="Editar cliente"
                   >
                     <img src={ editPNG } alt="Editar"/>
                   </button>
 
                   <button className="transparent-btn"
-                    onClick={() => selectClient(client)}
+                    onClick={() => openDeleteClientModal(client)}
                     title="Excluir cliente"
                   >
                     <img src={ deletePNG } alt="Excluir"/>
@@ -127,7 +144,7 @@ const Clients = () => {
         </>}
       </div>
 
-      <button onClick={() => setModalOpen(true)}
+      <button onClick={() => setModalOpen('create-client')}
         className="
           py-3 my-5 w-full
           rounded-sm bg-transparent
@@ -138,7 +155,7 @@ const Clients = () => {
         Criar cliente
       </button>
 
-      { data && (
+      { data?.totalPages && (
         <Paginator 
           actualPage={page} 
           setActualPage={setPage} 
@@ -146,10 +163,32 @@ const Clients = () => {
         />
       )}
 
-      <Modal isOpen={ModalOpen} title="Modal test" onClose={handleCloseModal}>
+      {/* Modal Create-client */}
+      <Modal isOpen={ModalOpen === 'create-client'} title="Criar cliente:" onClose={handleCloseModal}>
         <CreateClientForm 
           handleCloseModal={handleCloseModal}
         />
+      </Modal>
+
+      {/* Modal Delete-client */}
+      <Modal isOpen={ModalOpen === 'edit-client'} title="Editar cliente:" onClose={handleCloseModal}>
+        { clickedUser.current &&
+          <EditClientForm 
+            handleCloseModal={handleCloseModal}
+            user={clickedUser.current}
+          />
+        }
+      </Modal>
+
+      {/* Modal Delete-client */}
+      <Modal isOpen={ModalOpen === 'delete-client'} title="Excluir cliente:" onClose={handleCloseModal}>
+        { clickedUser.current &&
+          <DeleteClient 
+            handleCloseModal={handleCloseModal}
+            userName={clickedUser.current.name}
+            userId={clickedUser.current.id}
+          />
+        }
       </Modal>
     </section>
   );
