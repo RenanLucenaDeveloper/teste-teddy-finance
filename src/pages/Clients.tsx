@@ -14,6 +14,7 @@ import { useUpdateEffect } from "../hooks/useUpdateEffect";
 import { authorizedHeader } from "../utils/authorized-header";
 import { queryParams } from "../utils/query-params.util";
 import ErrorPage from "./ErrorFallback";
+import CreateClientForm from "../components/CreateClientForm";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -48,7 +49,7 @@ const Clients = () => {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-8 md:px-14 pt-7 box-content fade-in">
+    <section className="max-w-7xl mx-auto px-8 pb-8 md:px-14 pt-7 box-content fade-in">
       <div className="
         flex flex-col align-start justify-start
         md:flex-row md:align-center md:justify-between
@@ -146,11 +147,9 @@ const Clients = () => {
       )}
 
       <Modal isOpen={ModalOpen} title="Modal test" onClose={handleCloseModal}>
-        <input type="text" className="w-full p-2 mb-4"/>
-				
-				<button onClick={() => handleCloseModal(true)} className="px-4 py-2">
-					Salvar
-				</button>
+        <CreateClientForm 
+          handleCloseModal={handleCloseModal}
+        />
       </Modal>
     </section>
   );

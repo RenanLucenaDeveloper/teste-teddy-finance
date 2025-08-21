@@ -7,7 +7,7 @@ type props = {
     placeholder?: string,
 } & React.InputHTMLAttributes<HTMLInputElement>
 
-const Input = ({ id, inputSize = 'sm', className, placeholder, type = 'text', readOnly = false, required = true, ...props }: props) => {
+const Input = ({ id, inputSize = 'sm', className, placeholder, type = 'text', readOnly = false, ...props }: props) => {
   return (
     <>
         <label className="sr-only" htmlFor={ id }>
