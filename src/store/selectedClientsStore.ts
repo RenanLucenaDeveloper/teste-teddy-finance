@@ -17,7 +17,7 @@ export const useSelectedClientsStore = create<selectedClientsState>()(
             select: (client) => set((state) => 
                 state.selectedClients.some((item) => client.id === item.id)
                 ? state 
-                : { selectedClients: [client] }
+                : { selectedClients: [...state.selectedClients, client] }
             ),
 
             remove: (client) => set((state) => ({

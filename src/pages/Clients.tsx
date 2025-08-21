@@ -3,6 +3,7 @@ import Modal from "../components/Modal";
 import { itemsPerPageOptions } from "../utils/items-per-page-options.util";
 import type { User } from "../types/user-type";
 import plusSVG from "@assets/icons/plus.svg";
+import negativeSVG from "@assets/icons/negative.svg";
 import editPNG from "@assets/icons/edit.png";
 import deletePNG from "@assets/icons/delete.png";
 import { currency } from "../utils/currency-from-number.util";
@@ -17,6 +18,7 @@ import ErrorPage from "./ErrorFallback";
 import CreateClientForm from "../components/CreateClientForm";
 import DeleteClient from "../components/DeleteClient";
 import EditClientForm from "../components/EditClientForm";
+import { useSelectedClientsStore } from "../store/selectedClientsStore";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -24,8 +26,9 @@ const Clients = () => {
   const [page, setPage] = useState(1);
   const [itemsPerPage, setitemsPerPage] = useState('16');
 
-  const [ModalOpen, setModalOpen] = useState<boolean | string>(false);
   const clickedUser = useRef<User | undefined>(undefined);
+  const [ModalOpen, setModalOpen] = useState<boolean | string>(false);
+  const { select, selectedClients, remove } = useSelectedClientsStore()
 
   const { data, loading, error, refetch } = useFetch<getUsersDto>(
     `${ API_URL }/users${ queryParams({ page, limit: +itemsPerPage }) }`,
@@ -117,12 +120,23 @@ const Clients = () => {
                 </p>
 
                 <div className="flex justify-between align-center w-full mt-4">
-                  <button className="transparent-btn"
-                    onClick={() => openEditClientModal(client)}
-                    title="Selecionar cliente"
-                  >
-                    <img src={ plusSVG } alt="Selecionar"/>
-                  </button>
+                  { selectedClients.some((item) => item.id === client.id)
+                    ? (
+                      <button className="transparent-btn p-2"
+                        onClick={() => remove(client)}
+                        title="Remover cliente"
+                      >
+                        <img src={ negativeSVG } alt="Remover"/>
+                      </button>
+                    )
+                    : (
+                      <button className="transparent-btn"
+                        onClick={() => select(client)}
+                        title="Selecionar cliente">
+                        <img src={ plusSVG } alt="Selecionar"/>
+                      </button>
+                    )
+                  }
 
                   <button className="transparent-btn"
                     onClick={() => openEditClientModal(client)}

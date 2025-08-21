@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react"
+import { useEffect, useState, type FormEvent } from "react"
 import type { loginData } from "../dtos/login-dto"
 import Button from "../components/Button"
 import { useLogin } from "../store/authStore"
@@ -11,6 +11,8 @@ const Login = () => {
   const [isSubmitting, setSubmitting] = useState(false)
   const navigate = useNavigate()
   const login = useLogin()
+
+  useEffect(() => { localStorage.clear() }, [])
 
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     try {
