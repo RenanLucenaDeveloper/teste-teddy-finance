@@ -21,7 +21,6 @@ const Login = () => {
       setSubmitting(true)
       
       const loginInfo: loginData = { name }
-      console.log(login)
       setTimeout(() => {
         login(loginInfo);
         navigate("/clients")
