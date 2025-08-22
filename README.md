@@ -6,7 +6,7 @@ Para rodar este projeto localmente, certifique-se de ter o **Docker** instalado 
 
 ## Passo 1
 
-Inicie clonando **na mesma pasta** este repositório e o mfe a seguir:
+Inicie clonando **na mesma pasta**, este repositório 👆 e o mfe a seguir 👇:
 
 - https://github.com/RenanLucenaDeveloper/mfe-header-sidebar
 
