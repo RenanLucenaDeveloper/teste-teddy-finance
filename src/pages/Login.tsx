@@ -28,18 +28,17 @@ const Login = () => {
       }, 1500)
     }
     catch(error) {
-      console.log(error)
     }
     finally {
       setTimeout(() => {
         setSubmitting(false)
-      }, 1500)
+      }, 1000)
     }
   }
 
   return (
     <section className="
-      w-full h-vh h-dvh
+      w-full h-vh h-dvh px-5
       flex flex-col items-center justify-center
       fade-in"
     >

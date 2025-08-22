@@ -13,7 +13,8 @@ export default defineConfig({
       name: "host",
       filename: "remoteEntry.js",
       remotes: {
-        mfeHeaderSidebar: "http://localhost:5001/assets/remoteEntry.js",
+        // mfeHeaderSidebar: "http://localhost:5001/assets/remoteEntry.js",
+        mfeHeaderSidebar: "https://mfe-header-sidebar.vercel.app/",
       },
       exposes: {
         "./sidebarStore": "./src/store/sidebarStore.ts",
